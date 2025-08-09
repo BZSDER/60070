@@ -1,0 +1,17 @@
+Main为主函数
+
+先运行init_environment来加载yalmip和gurobi求解器和matpower，修改函数内文件夹对应求解器位置
+
+加载ieee24bus系统
+
+在assign_cost修改发电机电价和分布，使其能够对应不同情况下的风光发电占比
+
+加载scenario_library，根据环境对系统负荷进行扰动
+
+直接对ieee24bus系统进行opf模拟，然后对单个优化结果进行多次smc模拟，单次smc模拟代表一小时内电路表现（目前预估为8000次会使结果收敛），导出smc_base结果（EENS等）
+
+记录mpc_base数值（opf后的电路指标）
+
+进行含有ots的伪动态smc模拟（对应不同电路扰动实时进行ots优化），循环八千次，导出smc_ots结果
+
+输出结果，绘图
